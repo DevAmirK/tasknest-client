@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-gray-100 px-4 py-6">
-    <!-- Header -->
     <header class="flex justify-between items-center mb-6">
       <div>
         <h1 class="text-3xl font-bold text-gray-800">{{ $t('dashboard.title') }}</h1>
@@ -8,12 +7,15 @@
           {{ $t('dashboard.welcome', { name: auth.user.name }) }}
         </p>
       </div>
-      <button @click="handleLogout" class="text-sm text-red-500 hover:underline">
-        {{ $t('auth.logout') }}
-      </button>
+
+      <div class="flex gap-4 items-center">
+        <Languages />
+        <button @click="handleLogout" class="text-sm font-semibold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl">
+          {{ $t('auth.logout') }}
+        </button>
+      </div>
     </header>
 
-    <!-- Add Task Form -->
     <form @submit.prevent="addTask" class="mb-4 flex gap-2">
       <input
         v-model="newTask"
@@ -27,7 +29,6 @@
       </button>
     </form>
 
-    <!-- Task List -->
     <div v-if="tasks.length > 0" class="bg-white shadow rounded-lg divide-y divide-gray-200">
       <div v-for="task in tasks" :key="task.id" class="flex justify-between items-center px-4 py-3">
         <div class="flex items-center gap-2">
@@ -61,6 +62,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useAuthStore } from '@/store/auth'
 import { useTasksStore } from '@/store/tasks'
 import { useRouter } from 'vue-router'
+import Languages from '@/components/Languages.vue'
 
 const auth = useAuthStore()
 const tasksStore = useTasksStore()
