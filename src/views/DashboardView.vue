@@ -1,0 +1,119 @@
+<template>
+  <div class="min-h-screen bg-gray-100 px-4 py-6">
+    <!-- Header -->
+    <header class="flex justify-between items-center mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">My Tasks</h1>
+        <p v-if="auth.user" class="text-sm text-gray-600">Welcome, {{ auth.user.name }}!</p>
+      </div>
+      <button @click="handleLogout" class="text-sm text-red-500 hover:underline">
+        Logout
+      </button>
+    </header>
+
+    <!-- Add Task Form -->
+    <form @submit.prevent="addTask" class="mb-4 flex gap-2">
+      <input
+        v-model="newTask"
+        type="text"
+        placeholder="Add a new task..."
+        class="border border-gray-300 rounded-lg px-4 py-2 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        required
+      />
+      <button
+        type="submit"
+        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200"
+      >
+        Add
+      </button>
+    </form>
+
+    <!-- Task List -->
+    <div
+      v-if="tasks.length > 0"
+      class="bg-white shadow rounded-lg divide-y divide-gray-200"
+    >
+      <div
+        v-for="task in tasks"
+        :key="task.id"
+        class="flex justify-between items-center px-4 py-3"
+      >
+        <div class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            :checked="task.done"
+            @change="toggleTask(task)"
+            class="w-5 h-5 text-blue-500 rounded focus:ring-0"
+          />
+          <span
+            :class="{
+              'line-through text-gray-400': task.done,
+              'text-gray-800': !task.done,
+            }"
+            class="text-sm"
+          >
+            {{ task.text }}
+          </span>
+        </div>
+        <button
+          @click="deleteTask(task.id)"
+          class="text-sm text-red-500 hover:underline"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <p v-else class="text-center text-gray-500 mt-8">No tasks yet ✨</p>
+
+    <p v-if="tasksStore.error" class="text-center text-red-500 mt-4">
+      {{ tasksStore.error }}
+    </p>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted, computed } from 'vue'
+import { useAuthStore } from '@/store/auth'
+import { useTasksStore } from '@/store/tasks'
+import { useRouter } from 'vue-router'
+
+const auth = useAuthStore()
+const tasksStore = useTasksStore()
+const router = useRouter()
+
+const newTask = ref('')
+
+onMounted(async () => {
+  if (!auth.user) {
+    await auth.fetchUser()
+  }
+
+  if (!auth.token || !auth.user) {
+    router.push('/login')
+  }
+
+  await tasksStore.fetchTasks()
+})
+
+const tasks = computed(() => tasksStore.tasks)
+
+const addTask = () => {
+  if (!newTask.value.trim()) return
+  tasksStore.addTask(newTask.value.trim())
+  newTask.value = ''
+}
+
+const toggleTask = (task) => {
+  tasksStore.toggleTask(task)
+}
+
+const deleteTask = (id) => {
+  tasksStore.deleteTask(id)
+}
+
+const handleLogout = async () => {
+  await auth.logout()
+  router.push('/login')
+}
+</script>

@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  /* Цвета */
+  --color-white: #ffffff;
+  --color-primary: #3b82f6;
+  --color-light-gray-bg: #f9fafb;
+  --color-text: #1f2937;
+
+  /* Шрифт */
+  --font-main: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--color-white);
+  color: var(--color-text);
+  font-family: var(--font-main);
+}
+
+.input {
+  @apply border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400;
+}
+
+.btn-primary {
+  @apply bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg transition;
+}
