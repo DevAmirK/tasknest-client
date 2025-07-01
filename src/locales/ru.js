@@ -1,5 +1,5 @@
 export default {
-    home: {
+  home: {
     heroTitle: {
       part1: 'Организуй свой день',
       highlight: 'без усилий'
@@ -32,11 +32,13 @@ export default {
     noAccount: 'Нет аккаунта?',
     loginNow: 'Войти сейчас',
     registerNow: 'Зарегистрироваться',
-    loginTitle: "Вход в Tasknest",
-    registerTitle: "Регистрация в Tasknest",
+    loginTitle: 'Вход в Tasknest',
+    registerTitle: 'Регистрация в Tasknest',
     loggingIn: 'Вход...',
     registering: 'Регистрация...',
+    google: 'Войти через Google',
     invalid: 'Неверные данные',
+    or: 'или'
   },
   dashboard: {
     title: 'Мои задачи',
@@ -44,7 +46,7 @@ export default {
     addPlaceholder: 'Добавить новую задачу...',
     add: 'Добавить',
     noTasks: 'Пока нет задач ✨',
-    delete: 'Удалить',
+    delete: 'Удалить'
   },
   layout: {
     copyright: 'Все права защищены',
@@ -52,6 +54,6 @@ export default {
   },
   errors: {
     required: 'Это поле обязательно',
-    emailInvalid: 'Неверный адрес эл. почты',
-  },
+    emailInvalid: 'Неверный адрес эл. почты'
+  }
 }

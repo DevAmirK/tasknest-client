@@ -1,7 +1,16 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
     <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
-      <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">{{ $t('auth.loginTitle') }}</h2>
+      <h2 class="text-2xl font-bold mb-6 text-center">{{ $t('auth.loginTitle') }}</h2>
+      <button
+        @click="handleGoogleLogin"
+        class="w-full flex gap-4 items-center border-1 border-slate-400 hover:border-red-500 hover:bg-red-500 hover:text-white text-slate-400 font-semibold px-4 py-2 rounded-lg"
+      >
+        <GoogleIcon class="w-5 h-5 text-inherit" />
+        {{ $t('auth.google') }}
+      </button>
+
+      <hr class="hr-with-text" :data-content="$t('auth.or')" />
 
       <form @submit.prevent="handleLogin">
         <input
@@ -31,23 +40,20 @@
         <p v-if="auth.error" class="text-sm text-red-500 mt-4 text-center">
           {{ auth.error }}
         </p>
-
-        <p class="text-sm text-center mt-6">
-          {{ $t('auth.noAccount') }}
-          <router-link to="/register" class="text-blue-500 hover:underline">{{ $t('auth.register') }}</router-link>
-        </p>
       </form>
-      <button
-        @click="handleGoogleLogin"
-        class="w-full mt-4 bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200"
-      >
-        Login with Google
-      </button>
+
+      <hr class="my-4 border-t-2 border-slate-300" />
+
+      <p class="text-sm text-center">
+        {{ $t('auth.noAccount') }}
+        <router-link to="/register" class="text-blue-500 hover:underline">{{ $t('auth.registerNow') }}</router-link>
+      </p>
     </div>
   </div>
 </template>
 
 <script setup>
+import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { reactive } from 'vue'
 import { useAuthStore } from '@/store/auth'
 import { useRouter } from 'vue-router'
@@ -93,14 +99,5 @@ const handleGoogleLogin = () => {
   }
 
   window.addEventListener('message', receiveMessage, { once: true })
-}
-
-import { useI18n } from 'vue-i18n'
-
-const { locale } = useI18n()
-
-const changeLocale = () => {
-  localStorage.setItem('locale', locale.value)
-  // по желанию: window.location.reload() для полной перезагрузки
 }
 </script>

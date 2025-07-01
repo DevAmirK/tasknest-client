@@ -1,5 +1,5 @@
 export default {
-    home: {
+  home: {
     heroTitle: {
       part1: 'Organize your day',
       highlight: 'effortlessly'
@@ -32,11 +32,13 @@ export default {
     noAccount: "Don't have an account?",
     loginNow: 'Login now',
     registerNow: 'Register now',
-    loginTitle: "Login to Tasknest",
-    registerTitle: "Register for Tasknest",
+    loginTitle: 'Login to Tasknest',
+    registerTitle: 'Register for Tasknest',
     loggingIn: 'Logging in...',
     registering: 'Registering...',
+    google: 'Log in via Google',
     invalid: 'Invalid credentials',
+    or: 'or'
   },
   dashboard: {
     title: 'My Tasks',
@@ -44,7 +46,7 @@ export default {
     addPlaceholder: 'Add a new task...',
     add: 'Add',
     noTasks: 'No tasks yet ✨',
-    delete: 'Delete',
+    delete: 'Delete'
   },
   layout: {
     copyright: 'All rights reserved',
@@ -52,6 +54,6 @@ export default {
   },
   errors: {
     required: 'This field is required',
-    emailInvalid: 'Invalid email address',
-  },
+    emailInvalid: 'Invalid email address'
+  }
 }
