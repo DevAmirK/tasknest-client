@@ -6,16 +6,15 @@
           <img src="/logo.png" alt="" width="200" height="50" />
         </router-link>
 
-        <nav class="flex items-center gap-4">
+        <nav class="flex items-center gap-8">
           <Languages />
           <router-link to="/login" class="text-gray-700 hover:text-blue-600 mr-4">{{ $t('auth.login') }}</router-link>
         </nav>
       </div>
     </header>
 
-    <main class="flex-1 container mx-auto px-4 py-6">
+    <main class="flex-5 w-full px-4">
       <div class="min-h-screen flex flex-col bg-white text-gray-800">
-        <!-- Hero Section -->
         <section class="flex-1 flex flex-col justify-center items-center text-center px-4">
           <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
             {{ $t('home.heroTitle.part1') }}
@@ -29,8 +28,7 @@
           </router-link>
         </section>
 
-        <!-- Features -->
-        <section class="py-12 bg-gray-50">
+        <section class="w-full py-6 bg-gray-50">
           <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-3 gap-8 text-center">
             <div>
               <div class="text-blue-500 mb-2 text-4xl">📝</div>
@@ -61,6 +59,7 @@
         </section>
       </div>
     </main>
+
     <footer class="bg-gray-100 py-4 text-center text-sm text-gray-500">
       &copy; {{ new Date().getFullYear() }} Tasknest. {{ $t('layout.copyright') }}.
       <br />

@@ -1,8 +1,11 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-    <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
+  <div class="relative min-h-screen flex flex-col items-center gap-4 justify-center bg-gradient-to-br from-green-400 to-blue-500 px-4">
+    <div class="absolute inset-0 bg-black/40 z-0"></div>
+
+    <div class="relative bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
       <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">
         {{ $t('auth.registerTitle') }}
+        <router-link to="/" class="text-blue-500">Tasknest</router-link>
       </h2>
 
       <button

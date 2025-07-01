@@ -1,10 +1,15 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-    <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
-      <h2 class="text-2xl font-bold mb-6 text-center">{{ $t('auth.loginTitle') }}</h2>
+  <div class="relative min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-500 to-purple-600">
+    <div class="absolute inset-0 bg-black/40 z-0"></div>
+
+    <div class="relative z-10 bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-center">
+        {{ $t('auth.loginTitle') }}
+        <router-link to="/" class="text-blue-500">Tasknest</router-link>
+      </h2>
       <button
         @click="handleGoogleLogin"
-        class="w-full flex gap-4 items-center border-1 border-slate-400 hover:border-red-500 hover:bg-red-500 hover:text-white text-slate-400 font-semibold px-4 py-2 rounded-lg"
+        class="w-full flex gap-4 items-center border border-slate-400 hover:border-red-500 hover:bg-red-500 hover:text-white text-slate-400 font-semibold px-4 py-2 rounded-lg"
       >
         <GoogleIcon class="w-5 h-5 text-inherit" />
         {{ $t('auth.google') }}

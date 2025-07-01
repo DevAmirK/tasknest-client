@@ -32,11 +32,11 @@ export default {
     noAccount: "Don't have an account?",
     loginNow: 'Login now',
     registerNow: 'Register now',
-    loginTitle: 'Login to Tasknest',
-    registerTitle: 'Register for Tasknest',
+    loginTitle: 'Login to',
+    registerTitle: 'Register for',
     loggingIn: 'Logging in...',
     registering: 'Registering...',
-    google: 'Log in via Google',
+    google: 'Login via Google',
     invalid: 'Invalid credentials',
     or: 'or'
   },
@@ -45,7 +45,7 @@ export default {
     welcome: 'Welcome back, {name}!',
     addPlaceholder: 'Add a new task...',
     add: 'Add',
-    noTasks: 'No tasks yet ✨',
+    noTasks: 'No tasks yet',
     delete: 'Delete'
   },
   layout: {

@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
 import api from '@/utils/axios'
-import { useTasksStore } from './tasks' 
+import { useTasksStore } from './tasks'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem('token') || null,
     user: null,
     error: null,
-    loading: false,
+    loading: false
   }),
 
   actions: {
@@ -45,8 +45,8 @@ export const useAuthStore = defineStore('auth', {
       try {
         const res = await api.get('/profile', {
           headers: {
-            Authorization: `Bearer ${this.token}`,
-          },
+            Authorization: `Bearer ${this.token}`
+          }
         })
         this.user = res.data
       } catch (err) {
@@ -56,23 +56,29 @@ export const useAuthStore = defineStore('auth', {
 
     async logout() {
       const tasksStore = useTasksStore()
-      tasksStore.reset()
+      setTimeout(() => {
+        tasksStore.reset()
+      }, 2000)
 
       try {
-        await api.post('/logout', {}, {
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-          },
-        })
+        await api.post(
+          '/logout',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`
+            }
+          }
+        )
       } finally {
         this.token = null
         this.user = null
         localStorage.removeItem('token')
       }
-    },
+    }
   },
 
   getters: {
-    isAuthenticated: (state) => !!state.token,
-  },
+    isAuthenticated: (state) => !!state.token
+  }
 })

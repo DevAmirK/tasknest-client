@@ -32,8 +32,8 @@ export default {
     noAccount: 'Нет аккаунта?',
     loginNow: 'Войти сейчас',
     registerNow: 'Зарегистрироваться',
-    loginTitle: 'Вход в Tasknest',
-    registerTitle: 'Регистрация в Tasknest',
+    loginTitle: 'Вход в',
+    registerTitle: 'Регистрация в',
     loggingIn: 'Вход...',
     registering: 'Регистрация...',
     google: 'Войти через Google',
@@ -45,7 +45,7 @@ export default {
     welcome: 'С возвращением, {name}!',
     addPlaceholder: 'Добавить новую задачу...',
     add: 'Добавить',
-    noTasks: 'Пока нет задач ✨',
+    noTasks: 'Пока нет задач',
     delete: 'Удалить'
   },
   layout: {

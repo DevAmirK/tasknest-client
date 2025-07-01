@@ -3,11 +3,13 @@
     <!-- Header -->
     <header class="flex justify-between items-center mb-6">
       <div>
-        <h1 class="text-3xl font-bold text-gray-800">My Tasks</h1>
-        <p v-if="auth.user" class="text-sm text-gray-600">Welcome, {{ auth.user.name }}!</p>
+        <h1 class="text-3xl font-bold text-gray-800">{{ $t('dashboard.title') }}</h1>
+        <p v-if="auth.user" class="text-sm text-gray-600">
+          {{ $t('dashboard.welcome', { name: auth.user.name }) }}
+        </p>
       </div>
       <button @click="handleLogout" class="text-sm text-red-500 hover:underline">
-        Logout
+        {{ $t('auth.logout') }}
       </button>
     </header>
 
@@ -16,55 +18,37 @@
       <input
         v-model="newTask"
         type="text"
-        placeholder="Add a new task..."
+        :placeholder="$t('dashboard.addPlaceholder')"
         class="border border-gray-300 rounded-lg px-4 py-2 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
         required
       />
-      <button
-        type="submit"
-        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200"
-      >
-        Add
+      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200">
+        {{ $t('dashboard.add') }}
       </button>
     </form>
 
     <!-- Task List -->
-    <div
-      v-if="tasks.length > 0"
-      class="bg-white shadow rounded-lg divide-y divide-gray-200"
-    >
-      <div
-        v-for="task in tasks"
-        :key="task.id"
-        class="flex justify-between items-center px-4 py-3"
-      >
+    <div v-if="tasks.length > 0" class="bg-white shadow rounded-lg divide-y divide-gray-200">
+      <div v-for="task in tasks" :key="task.id" class="flex justify-between items-center px-4 py-3">
         <div class="flex items-center gap-2">
-          <input
-            type="checkbox"
-            :checked="task.done"
-            @change="toggleTask(task)"
-            class="w-5 h-5 text-blue-500 rounded focus:ring-0"
-          />
+          <input type="checkbox" :checked="task.done" @change="toggleTask(task)" class="w-5 h-5 text-blue-500 rounded focus:ring-0" />
           <span
             :class="{
               'line-through text-gray-400': task.done,
-              'text-gray-800': !task.done,
+              'text-gray-800': !task.done
             }"
             class="text-sm"
           >
             {{ task.text }}
           </span>
         </div>
-        <button
-          @click="deleteTask(task.id)"
-          class="text-sm text-red-500 hover:underline"
-        >
-          Delete
+        <button @click="deleteTask(task.id)" class="text-sm text-red-500 hover:underline">
+          {{ $t('dashboard.delete') }}
         </button>
       </div>
     </div>
 
-    <p v-else class="text-center text-gray-500 mt-8">No tasks yet ✨</p>
+    <p v-else class="text-center text-gray-500 mt-8">{{ $t('dashboard.noTasks') }}</p>
 
     <p v-if="tasksStore.error" class="text-center text-red-500 mt-4">
       {{ tasksStore.error }}
