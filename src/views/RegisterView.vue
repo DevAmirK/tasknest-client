@@ -82,8 +82,11 @@ import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { ref, reactive } from 'vue'
 import { useAuthStore } from '@/store/auth'
 import { useRouter } from 'vue-router'
+import { useGoogleLogin } from '@/composables/useGoogleLogin'
 import { LoaderCircle } from 'lucide-vue-next'
 import Languages from '@/components/Languages.vue'
+
+const { handleGoogleLogin, loadingGoogle } = useGoogleLogin()
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -99,43 +102,5 @@ const handleRegister = async () => {
   if (auth.token) {
     router.push('/dashboard')
   }
-}
-
-const loadingGoogle = ref(false)
-
-const handleGoogleLogin = () => {
-  loadingGoogle.value = true
-
-  const width = 500
-  const height = 600
-  const left = window.screenX + (window.outerWidth - width) / 2
-  const top = window.screenY + (window.outerHeight - height) / 2
-
-  const popup = window.open(
-    `${import.meta.env.VITE_API_URL}/auth/google/redirect`,
-    'googleLogin',
-    `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars`
-  )
-
-  if (!popup) {
-    loadingGoogle.value = false
-    return
-  }
-
-  const receiveMessage = async (event) => {
-    if (event.origin !== import.meta.env.VITE_API_URL.replace('/api', '')) return
-
-    const { token } = event.data
-    if (token) {
-      auth.token = token
-      localStorage.setItem('token', token)
-      await auth.fetchUser()
-      router.push('/dashboard')
-    }
-
-    loadingGoogle.value = false
-  }
-
-  window.addEventListener('message', receiveMessage, { once: true })
 }
 </script>

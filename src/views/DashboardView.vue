@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen">
-    <header class="flex justify-between items-center mb-6 border-b-2 border-slate-200">
+    <header class="flex justify-between items-center mb-6 border-b-2 border-slate-200 px-6 pt-4">
       <div>
         <h1 class="text-3xl font-bold text-gray-800">{{ $t('dashboard.title') }}</h1>
         <p v-if="auth.user?.name" class="text-sm text-gray-600">
@@ -15,87 +15,90 @@
         </button>
       </div>
     </header>
-    <div class="wrapper mx-auto">
-      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        <TaskNote v-for="task in tasks" :key="task.id" :task="task" @toggle="toggleTask" @delete="deleteTask" />
 
-        <div
-          @click="creating = true"
-          v-if="!creating"
-          class="cursor-pointer border-2 border-dashed border-blue-400 rounded-xl p-4 flex flex-col items-center justify-center text-blue-500 hover:bg-blue-50 transition"
-        >
-          <Plus class="w-8 h-8" />
-          <span class="mt-2 text-sm">{{ $t('dashboard.add') }}</span>
-        </div>
+    <div class="flex wrapper">
+      <aside class="w-48">
+        <nav class="flex flex-col gap-2">
+          <button
+            v-for="tabOption in tabs"
+            :key="tabOption"
+            @click="activeTab = tabOption"
+            class="text-left py-2 px-3 rounded-lg font-medium transition hover:bg-slate-100"
+            :class="{ 'bg-blue-50 text-blue-600': activeTab === tabOption }"
+          >
+            {{ $t(`dashboard.tabs.${tabOption}`) }}
+          </button>
+        </nav>
+      </aside>
 
-        <div v-if="creating" class="bg-white rounded-xl p-4 shadow">
-          <form @submit.prevent="addTask">
-            <textarea
-              v-model="newTask"
-              rows="3"
-              class="w-full border border-gray-300 rounded-lg px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
-              :placeholder="$t('dashboard.addPlaceholder')"
-              required
-            ></textarea>
-            <div class="mt-2 flex justify-end gap-2">
-              <button type="button" @click="cancelNewTask" class="text-sm text-gray-500 hover:underline">
-                {{ $t('dashboard.cancel') }}
-              </button>
-              <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-lg text-sm font-semibold">
-                {{ $t('dashboard.add') }}
-              </button>
-            </div>
-          </form>
-        </div>
+      <div class="flex-1 px-4">
+        <TasksView
+          v-if="activeTab === 'tasks'"
+          :active-palette-id="activePaletteId"
+          :open-palette="openPalette"
+          :close-palette="closePalette"
+          :toggle-task="toggleTask"
+          :delete-task="deleteTask"
+        />
+        <ArchiveView
+          v-else-if="activeTab === 'archive'"
+          :active-palette-id="activePaletteId"
+          :open-palette="openPalette"
+          :close-palette="closePalette"
+          :toggle-task="toggleTask"
+          :delete-task="deleteTask"
+        />
+        <TrashView
+          v-else-if="activeTab === 'trash'"
+          :active-palette-id="activePaletteId"
+          :open-palette="openPalette"
+          :close-palette="closePalette"
+          :delete-task="deleteTask"
+        />
+
+        <p v-if="tasksStore.error" class="text-center text-red-500 mt-4">
+          {{ tasksStore.error }}
+        </p>
       </div>
-
-      <p v-if="tasksStore.error" class="text-center text-red-500 mt-4">
-        {{ tasksStore.error }}
-      </p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/store/auth'
 import { useTasksStore } from '@/store/tasks'
 import { useRouter } from 'vue-router'
 import Languages from '@/components/Languages.vue'
-import TaskNote from '@/components/TaskNote.vue'
-import { Plus } from 'lucide-vue-next'
+import TasksView from '@/views/TasksView.vue'
+import ArchiveView from '@/views/ArchiveView.vue'
+import TrashView from '@/views/TrashView.vue'
 
 const auth = useAuthStore()
 const tasksStore = useTasksStore()
 const router = useRouter()
 
-const newTask = ref('')
-const creating = ref(false)
+const activePaletteId = ref(null)
+const activeTab = ref('tasks')
+const tabs = ['tasks', 'archive', 'trash']
 
 onMounted(async () => {
   if (!auth.user) await auth.fetchUser()
   if (!auth.token || !auth.user) router.push('/login')
   await tasksStore.fetchTasks()
+
+  setInterval(() => {
+    tasksStore.fetchTasks()
+  }, 1000)
 })
 
-const tasks = computed(() => tasksStore.tasks)
-
-const addTask = () => {
-  if (!newTask.value.trim()) return
-  tasksStore.addTask(newTask.value.trim())
-  newTask.value = ''
-  creating.value = false
-}
-
-const cancelNewTask = () => {
-  creating.value = false
-  newTask.value = ''
-}
-
-const toggleTask = (task) => tasksStore.toggleTask(task)
-const deleteTask = (id) => tasksStore.deleteTask(id)
 const handleLogout = async () => {
   await auth.logout()
   router.push('/login')
 }
+
+const openPalette = (id) => (activePaletteId.value = id)
+const closePalette = () => (activePaletteId.value = null)
+const toggleTask = (task) => tasksStore.toggleTask(task)
+const deleteTask = (id) => tasksStore.deleteTask(id)
 </script>

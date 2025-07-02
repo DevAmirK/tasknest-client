@@ -1,13 +1,10 @@
 @import 'tailwindcss';
 
 :root {
-  /* Цвета */
   --color-white: #fafafa;
   --color-primary: #3b82f6;
   --color-light-gray-bg: #f9fafb;
   --color-text: #1f2937;
-
-  /* Шрифт */
   --font-main: 'Inter', sans-serif;
 }
 
@@ -51,7 +48,7 @@ button {
 .hr-with-text {
   position: relative;
   text-align: center;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   height: 1.5em;
   border-top: none;
 }
@@ -106,14 +103,16 @@ button {
   transition: all 0.3s ease-in-out;
 }
 
-.call-to-action:hover {
+.call-to-action:hover,
+.call-to-action:active {
   color: var(--color-text);
   background-color: #fafafa;
   padding-left: 1rem;
   box-shadow: 0 0.25rem 10px rgba(120, 120, 120, 0.3);
 }
 
-.call-to-action:hover::after {
+.call-to-action:hover::after,
+.call-to-action:active::after {
   left: 0.5rem;
 }
 

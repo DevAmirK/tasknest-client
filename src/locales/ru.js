@@ -48,7 +48,14 @@ export default {
     noTasks: 'Пока нет задач',
     delete: 'Удалить',
     cancel: 'Отмена',
-    done: 'Готово'
+    done: 'Готово',
+    completed: 'Завершено',
+    clearTrash: 'Очистить корзину',
+    tabs: {
+      tasks: 'Задачи',
+      archive: 'Архив',
+      trash: 'Корзина'
+    }
   },
   layout: {
     copyright: 'Все права защищены',
@@ -60,6 +67,7 @@ export default {
   },
   toast: {
     taskAdded: 'Задача добавлена!',
+    taskUpdated: 'Задача обновлена!',
     taskAddError: 'Не удалось добавить задачу.',
     taskDeleted: 'Задача удалена.',
     taskDeleteError: 'Не удалось удалить задачу.',

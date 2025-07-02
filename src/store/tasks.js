@@ -9,20 +9,24 @@ export const useTasksStore = defineStore('tasks', {
   state: () => ({
     tasks: JSON.parse(localStorage.getItem(TASKS_KEY)) || [],
     error: null,
-    loading: false
+    loading: false,
+    fetchStatus: 'idle' // 'idle' | 'loading' | 'success' | 'error'
   }),
 
   actions: {
     async fetchTasks() {
+      this.fetchStatus = 'loading'
       this.loading = true
       this.error = null
       try {
         const res = await api.get('/tasks')
         this.tasks = res.data
         this.saveToLocalStorage()
+        this.fetchStatus = 'success'
       } catch (err) {
         this.error = t('toast.taskFetchError')
         toast.error(this.error)
+        this.fetchStatus = 'error'
       } finally {
         this.loading = false
       }
@@ -65,6 +69,27 @@ export const useTasksStore = defineStore('tasks', {
         this.error = t('toast.taskUpdateError')
         toast.error(this.error)
         this.saveToLocalStorage()
+      }
+    },
+
+    async updateTask(id, payload) {
+      const index = this.tasks.findIndex((t) => t.id === id)
+      if (index === -1) return
+
+      const originalTask = { ...this.tasks[index] }
+
+      this.tasks[index] = { ...this.tasks[index], ...payload }
+      this.saveToLocalStorage()
+
+      try {
+        const res = await api.put(`/tasks/${id}`, payload)
+        this.tasks[index] = res.data
+        this.saveToLocalStorage()
+        toast.success(t('toast.taskUpdated'))
+      } catch (err) {
+        this.tasks[index] = originalTask
+        this.saveToLocalStorage()
+        toast.error(t('toast.taskUpdateError'))
       }
     },
 

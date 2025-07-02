@@ -48,7 +48,14 @@ export default {
     noTasks: 'No tasks yet',
     delete: 'Delete',
     cancel: 'Cancel',
-    done: 'Done'
+    done: 'Done',
+    completed: 'Completed',
+    clearTrash: 'Clear Trash',
+    tabs: {
+      tasks: 'Tasks',
+      archive: 'Archive',
+      trash: 'Trash'
+    }
   },
   layout: {
     copyright: 'All rights reserved',
@@ -60,6 +67,7 @@ export default {
   },
   toast: {
     taskAdded: 'Task added!',
+    taskUpdated: 'Task updated!',
     taskAddError: 'Failed to add task.',
     taskDeleted: 'Task deleted.',
     taskDeleteError: 'Failed to delete task.',
