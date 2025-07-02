@@ -23,7 +23,7 @@ const selectLanguage = (code) => {
 </script>
 
 <template>
-  <div class="relative">
+  <div>
     <button @click="toggle" class="flex items-center text-gray-700 hover:text-blue-600">
       <Languages class="w-5 h-5" />
     </button>

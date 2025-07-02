@@ -42,11 +42,13 @@ export default {
   },
   dashboard: {
     title: 'Мои задачи',
-    welcome: 'С возвращением, {name}!',
+    welcome: 'С возвращением,',
     addPlaceholder: 'Добавить новую задачу...',
     add: 'Добавить',
     noTasks: 'Пока нет задач',
-    delete: 'Удалить'
+    delete: 'Удалить',
+    cancel: 'Отмена',
+    done: 'Готово'
   },
   layout: {
     copyright: 'Все права защищены',
@@ -55,5 +57,13 @@ export default {
   errors: {
     required: 'Это поле обязательно',
     emailInvalid: 'Неверный адрес эл. почты'
+  },
+  toast: {
+    taskAdded: 'Задача добавлена!',
+    taskAddError: 'Не удалось добавить задачу.',
+    taskDeleted: 'Задача удалена.',
+    taskDeleteError: 'Не удалось удалить задачу.',
+    taskUpdateError: 'Не удалось обновить задачу.',
+    taskFetchError: 'Не удалось загрузить задачи.'
   }
 }

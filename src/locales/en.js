@@ -42,11 +42,13 @@ export default {
   },
   dashboard: {
     title: 'My Tasks',
-    welcome: 'Welcome back, {name}!',
+    welcome: 'Welcome back,',
     addPlaceholder: 'Add a new task...',
     add: 'Add',
     noTasks: 'No tasks yet',
-    delete: 'Delete'
+    delete: 'Delete',
+    cancel: 'Cancel',
+    done: 'Done'
   },
   layout: {
     copyright: 'All rights reserved',
@@ -55,5 +57,13 @@ export default {
   errors: {
     required: 'This field is required',
     emailInvalid: 'Invalid email address'
+  },
+  toast: {
+    taskAdded: 'Task added!',
+    taskAddError: 'Failed to add task.',
+    taskDeleted: 'Task deleted.',
+    taskDeleteError: 'Failed to delete task.',
+    taskUpdateError: 'Failed to update task.',
+    taskFetchError: 'Failed to load tasks.'
   }
 }

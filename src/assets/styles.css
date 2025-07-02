@@ -2,7 +2,7 @@
 
 :root {
   /* Цвета */
-  --color-white: #ffffff;
+  --color-white: #fafafa;
   --color-primary: #3b82f6;
   --color-light-gray-bg: #f9fafb;
   --color-text: #1f2937;
@@ -15,6 +15,25 @@ body {
   background-color: var(--color-white);
   color: var(--color-text);
   font-family: var(--font-main);
+}
+
+header {
+  backdrop-filter: blur(1.5rem);
+  padding: 0.6rem 6rem;
+}
+
+.wrapper {
+  padding: 0.5rem 6rem;
+}
+
+@media screen and (max-width: 768px) {
+  header {
+    padding: 0.6rem 1rem;
+  }
+
+  .wrapper {
+    padding: 0.5rem 1rem;
+  }
 }
 
 .input {
@@ -59,4 +78,54 @@ button {
   font-weight: 500;
   z-index: 1;
   transform: translateY(-10%);
+}
+
+.call-to-action {
+  position: relative;
+  width: 10rem;
+  color: #fafafa;
+  background-color: var(--color-primary);
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.call-to-action::after {
+  content: '➤';
+  position: absolute;
+  left: -2rem;
+  top: 0;
+  width: 2rem;
+  height: 100%;
+  background-color: transparent;
+  color: var(--color-text);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.call-to-action:hover {
+  color: var(--color-text);
+  background-color: #fafafa;
+  padding-left: 1rem;
+  box-shadow: 0 0.25rem 10px rgba(120, 120, 120, 0.3);
+}
+
+.call-to-action:hover::after {
+  left: 0.5rem;
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
 }

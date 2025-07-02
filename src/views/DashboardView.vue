@@ -1,59 +1,58 @@
 <template>
-  <div class="min-h-screen bg-gray-100 px-4 py-6">
-    <header class="flex justify-between items-center mb-6">
+  <div class="min-h-screen">
+    <header class="flex justify-between items-center mb-6 border-b-2 border-slate-200">
       <div>
         <h1 class="text-3xl font-bold text-gray-800">{{ $t('dashboard.title') }}</h1>
-        <p v-if="auth.user" class="text-sm text-gray-600">
-          {{ $t('dashboard.welcome', { name: auth.user.name }) }}
+        <p v-if="auth.user?.name" class="text-sm text-gray-600">
+          {{ $t('dashboard.welcome') }} <b>{{ auth.user.name }}</b>
         </p>
       </div>
 
       <div class="flex gap-4 items-center">
-        <Languages />
+        <Languages class="relative" />
         <button @click="handleLogout" class="text-sm font-semibold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl">
           {{ $t('auth.logout') }}
         </button>
       </div>
     </header>
+    <div class="wrapper mx-auto">
+      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <TaskNote v-for="task in tasks" :key="task.id" :task="task" @toggle="toggleTask" @delete="deleteTask" />
 
-    <form @submit.prevent="addTask" class="mb-4 flex gap-2">
-      <input
-        v-model="newTask"
-        type="text"
-        :placeholder="$t('dashboard.addPlaceholder')"
-        class="border border-gray-300 rounded-lg px-4 py-2 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        required
-      />
-      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200">
-        {{ $t('dashboard.add') }}
-      </button>
-    </form>
-
-    <div v-if="tasks.length > 0" class="bg-white shadow rounded-lg divide-y divide-gray-200">
-      <div v-for="task in tasks" :key="task.id" class="flex justify-between items-center px-4 py-3">
-        <div class="flex items-center gap-2">
-          <input type="checkbox" :checked="task.done" @change="toggleTask(task)" class="w-5 h-5 text-blue-500 rounded focus:ring-0" />
-          <span
-            :class="{
-              'line-through text-gray-400': task.done,
-              'text-gray-800': !task.done
-            }"
-            class="text-sm"
-          >
-            {{ task.text }}
-          </span>
+        <div
+          @click="creating = true"
+          v-if="!creating"
+          class="cursor-pointer border-2 border-dashed border-blue-400 rounded-xl p-4 flex flex-col items-center justify-center text-blue-500 hover:bg-blue-50 transition"
+        >
+          <Plus class="w-8 h-8" />
+          <span class="mt-2 text-sm">{{ $t('dashboard.add') }}</span>
         </div>
-        <button @click="deleteTask(task.id)" class="text-sm text-red-500 hover:underline">
-          {{ $t('dashboard.delete') }}
-        </button>
+
+        <div v-if="creating" class="bg-white rounded-xl p-4 shadow">
+          <form @submit.prevent="addTask">
+            <textarea
+              v-model="newTask"
+              rows="3"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
+              :placeholder="$t('dashboard.addPlaceholder')"
+              required
+            ></textarea>
+            <div class="mt-2 flex justify-end gap-2">
+              <button type="button" @click="cancelNewTask" class="text-sm text-gray-500 hover:underline">
+                {{ $t('dashboard.cancel') }}
+              </button>
+              <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-lg text-sm font-semibold">
+                {{ $t('dashboard.add') }}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
+
+      <p v-if="tasksStore.error" class="text-center text-red-500 mt-4">
+        {{ tasksStore.error }}
+      </p>
     </div>
-
-    <p v-else class="text-center text-gray-500 mt-8">{{ $t('dashboard.noTasks') }}</p>
-
-    <p v-if="tasksStore.error" class="text-center text-red-500 mt-4">
-      {{ tasksStore.error }}
-    </p>
   </div>
 </template>
 
@@ -63,22 +62,19 @@ import { useAuthStore } from '@/store/auth'
 import { useTasksStore } from '@/store/tasks'
 import { useRouter } from 'vue-router'
 import Languages from '@/components/Languages.vue'
+import TaskNote from '@/components/TaskNote.vue'
+import { Plus } from 'lucide-vue-next'
 
 const auth = useAuthStore()
 const tasksStore = useTasksStore()
 const router = useRouter()
 
 const newTask = ref('')
+const creating = ref(false)
 
 onMounted(async () => {
-  if (!auth.user) {
-    await auth.fetchUser()
-  }
-
-  if (!auth.token || !auth.user) {
-    router.push('/login')
-  }
-
+  if (!auth.user) await auth.fetchUser()
+  if (!auth.token || !auth.user) router.push('/login')
   await tasksStore.fetchTasks()
 })
 
@@ -88,16 +84,16 @@ const addTask = () => {
   if (!newTask.value.trim()) return
   tasksStore.addTask(newTask.value.trim())
   newTask.value = ''
+  creating.value = false
 }
 
-const toggleTask = (task) => {
-  tasksStore.toggleTask(task)
+const cancelNewTask = () => {
+  creating.value = false
+  newTask.value = ''
 }
 
-const deleteTask = (id) => {
-  tasksStore.deleteTask(id)
-}
-
+const toggleTask = (task) => tasksStore.toggleTask(task)
+const deleteTask = (id) => tasksStore.deleteTask(id)
 const handleLogout = async () => {
   await auth.logout()
   router.push('/login')
