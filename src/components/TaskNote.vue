@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative shadow-md rounded-xl p-4 flex flex-col justify-between transition-all duration-300"
+    class="relative shadow-md rounded-xl flex flex-col justify-between transition-all duration-300"
     :style="{
       backgroundColor: task.color || '#ffffff',
       opacity: task.done ? 0.9 : 1,
@@ -9,7 +9,7 @@
   >
     <div
       v-if="!editing"
-      class="flex-1 text-sm whitespace-pre-wrap break-words cursor-pointer"
+      class="flex-1 text-sm whitespace-pre-wrap break-words cursor-pointer p-4"
       @click="startEditing"
       :class="{ 'line-through': task.done }"
     >
@@ -23,7 +23,7 @@
       @blur="cancelEdit"
     ></textarea>
 
-    <div class="mt-4 flex justify-between items-center">
+    <div class="mt-8 flex justify-between items-center px-4 py-2">
       <label v-if="route.name !== 'trash'" class="flex items-center gap-2 cursor-pointer select-none" @click="$emit('toggle', task)">
         <Transition name="fade-scale" mode="out-in">
           <SquareCheck v-if="task.done" key="checked" class="w-5 h-5" />
@@ -54,21 +54,27 @@
         <button v-if="route.name !== 'trash'"><Archive /></button>
 
         <template v-else>
-          <button @click="restoreTask">
+          <button @click="$emit('restore', task)">
             <Undo2 />
           </button>
         </template>
 
-        <button @click="$emit('delete', task.id)">
-          <Trash />
+        <button v-if="route.name !== 'trash'" @click="$emit('trash', task.id)">
+          <Trash2 />
         </button>
+
+        <template v-else>
+          <button @click="$emit('delete', task.id)">
+            <SquareX />
+          </button>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { Archive, Palette, Square, SquareCheck, Trash, Undo2 } from 'lucide-vue-next'
+import { Archive, Palette, Square, SquareCheck, SquareX, Trash2, Undo2 } from 'lucide-vue-next'
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useTasksStore } from '@/store/tasks'
 import { useRoute } from 'vue-router'
@@ -79,7 +85,7 @@ const props = defineProps({
   task: Object,
   activePaletteId: Object
 })
-const emit = defineEmits(['toggle', 'delete', 'open-palette', 'close-palette'])
+const emit = defineEmits(['toggle', 'delete', 'trash', 'restore', 'open-palette', 'close-palette'])
 
 const paletteRef = ref(null)
 const editing = ref(false)
@@ -110,13 +116,6 @@ const saveText = async () => {
 
 const cancelEdit = () => {
   editing.value = false
-}
-
-const restoreTask = async () => {
-  await tasksStore.updateTask(props.task.id, {
-    status: 0,
-    deleted_at: null
-  })
 }
 
 const handleClickOutside = (event) => {

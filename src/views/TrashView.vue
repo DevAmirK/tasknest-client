@@ -5,7 +5,7 @@
         {{ $t('dashboard.clearTrash') }}
       </button>
     </div>
-    <div class="grid grid-cols-4 gap-4 mt-2">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
       <TaskNote
         v-for="task in trashTasks"
         :key="task.id"
@@ -14,6 +14,7 @@
         @open-palette="openPalette"
         @close-palette="closePalette"
         @delete="deleteTask"
+        @restore="restoreTask"
       />
     </div>
   </div>
@@ -31,6 +32,7 @@ const trashTasks = computed(() => tasksStore.tasks.filter((t) => t.status === 2)
 
 const deleteTask = (id) => tasksStore.deleteTask(id)
 const clearTrash = () => tasksStore.clearTrash()
+const restoreTask = (task) => tasksStore.restoreTask(task)
 const openPalette = (id) => (activePaletteId.value = id)
 const closePalette = () => (activePaletteId.value = null)
 </script>

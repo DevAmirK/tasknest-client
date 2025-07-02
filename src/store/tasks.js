@@ -93,6 +93,57 @@ export const useTasksStore = defineStore('tasks', {
       }
     },
 
+    async trashTask(id) {
+      const original = [...this.tasks]
+      const taskToTrash = this.tasks.find((task) => task.id === id) // сохраняем
+
+      this.tasks = this.tasks.filter((task) => task.id !== id)
+      this.saveToLocalStorage()
+
+      try {
+        await api.put(`/tasks/${id}`, { status: 2 })
+
+        toast(t('toast.taskTrashed'), {
+          action: {
+            label: t('toast.undo'),
+            onClick: () => this.restoreTask(taskToTrash)
+          }
+        })
+      } catch (err) {
+        this.tasks = original
+        this.error = t('toast.taskTrashError')
+        toast.error(this.error)
+        this.saveToLocalStorage()
+      }
+    },
+
+    async restoreTask(task) {
+      this.tasks = this.tasks.filter((t) => t.id !== task.id)
+
+      const restored = { ...task, status: 0, deleted_at: null }
+      this.tasks.unshift(restored)
+      this.saveToLocalStorage()
+
+      try {
+        const res = await api.put(`/tasks/${task.id}`, {
+          status: 0,
+          deleted_at: null
+        })
+
+        const index = this.tasks.findIndex((t) => t.id === task.id)
+        if (index !== -1) {
+          this.tasks[index] = res.data
+          this.saveToLocalStorage()
+        }
+
+        toast.success(t('toast.taskRestored'))
+      } catch (err) {
+        this.tasks = this.tasks.filter((t) => t.id !== task.id)
+        this.saveToLocalStorage()
+        toast.error(t('toast.taskRestoreError'))
+      }
+    },
+
     async deleteTask(id) {
       const original = [...this.tasks]
       this.tasks = this.tasks.filter((task) => task.id !== id)

@@ -70,8 +70,13 @@ export default {
     taskUpdated: 'Задача обновлена!',
     taskAddError: 'Не удалось добавить задачу.',
     taskDeleted: 'Задача удалена.',
+    taskTrashed: 'Задача перемещена в корзину.',
+    taskRestored: 'Задача восстановлена!',
     taskDeleteError: 'Не удалось удалить задачу.',
     taskUpdateError: 'Не удалось обновить задачу.',
-    taskFetchError: 'Не удалось загрузить задачи.'
+    taskFetchError: 'Не удалось загрузить задачи.',
+    taskTrashError: 'Не удалось переместить задачу в корзину.',
+    taskRestoreError: 'Не удалось восстановить задачу.',
+    undo: 'Отменить'
   }
 }

@@ -25,11 +25,11 @@ header {
 
 @media screen and (max-width: 768px) {
   header {
-    padding: 0.6rem 1rem;
+    padding: 0.6rem 0.5rem;
   }
 
   .wrapper {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
   }
 }
 

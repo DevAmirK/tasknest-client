@@ -70,8 +70,13 @@ export default {
     taskUpdated: 'Task updated!',
     taskAddError: 'Failed to add task.',
     taskDeleted: 'Task deleted.',
+    taskTrashed: 'Task moved to trash.',
+    taskRestored: 'Task restored!',
     taskDeleteError: 'Failed to delete task.',
     taskUpdateError: 'Failed to update task.',
-    taskFetchError: 'Failed to load tasks.'
+    taskFetchError: 'Failed to load tasks.',
+    taskTrashError: 'Failed to move task to trash.',
+    taskRestoreError: 'Failed to restore task.',
+    undo: 'Undo'
   }
 }

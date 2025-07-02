@@ -29,7 +29,7 @@
       </form>
     </div>
 
-    <div class="grid grid-cols-4 gap-4 mt-2">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
       <TaskNote
         v-for="task in activeTasks"
         :key="task.id"
@@ -39,6 +39,8 @@
         @close-palette="closePalette"
         @toggle="toggleTask"
         @delete="deleteTask"
+        @trash="trashTask"
+        @restore="restoreTask"
       />
     </div>
 
@@ -53,6 +55,7 @@
       @close-palette="closePalette"
       @toggle="toggleTask"
       @delete="deleteTask"
+      @trash="trashTask"
     />
   </div>
 </template>
@@ -87,6 +90,9 @@ const cancelNewTask = () => {
 
 const toggleTask = (task) => tasksStore.toggleTask(task)
 const deleteTask = (id) => tasksStore.deleteTask(id)
+const trashTask = (id) => tasksStore.trashTask(id)
+const restoreTask = (task) => tasksStore.restoreTask(task)
+
 const openPalette = (id) => (activePaletteId.value = id)
 const closePalette = () => (activePaletteId.value = null)
 

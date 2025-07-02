@@ -15,7 +15,7 @@
 
     <main class="flex-5 w-full px-4">
       <div class="min-h-screen flex flex-col text-gray-800">
-        <section class="flex-1 flex flex-col justify-center items-center text-center px-4">
+        <section class="flex-1 flex flex-col justify-center items-center text-center px-4 mt-10 md:mt-0">
           <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
             {{ $t('home.heroTitle.part1') }}
             <span class="text-blue-500">{{ $t('home.heroTitle.highlight') }}</span>
