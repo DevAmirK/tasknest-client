@@ -83,7 +83,7 @@ const route = useRoute()
 
 const props = defineProps({
   task: Object,
-  activePaletteId: Object
+  activePaletteId: Number
 })
 const emit = defineEmits(['toggle', 'delete', 'trash', 'restore', 'open-palette', 'close-palette'])
 
@@ -124,12 +124,20 @@ const handleClickOutside = (event) => {
   }
 }
 
+const isMobile = ref(window.innerWidth < 640)
+
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 640
+}
+
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  window.addEventListener('resize', handleResize)
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 

@@ -46,17 +46,19 @@
 
     <hr v-if="completedTasks.length" class="hr-with-text col-span-full border-t border-gray-300 my-4" :data-content="$t('dashboard.completed')" />
 
-    <TaskNote
-      v-for="task in completedTasks"
-      :key="task.id"
-      :task="task"
-      :active-palette-id="activePaletteId"
-      @open-palette="openPalette"
-      @close-palette="closePalette"
-      @toggle="toggleTask"
-      @delete="deleteTask"
-      @trash="trashTask"
-    />
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+      <TaskNote
+        v-for="task in completedTasks"
+        :key="task.id"
+        :task="task"
+        :active-palette-id="activePaletteId"
+        @open-palette="openPalette"
+        @close-palette="closePalette"
+        @toggle="toggleTask"
+        @delete="deleteTask"
+        @trash="trashTask"
+      />
+    </div>
   </div>
 </template>
 

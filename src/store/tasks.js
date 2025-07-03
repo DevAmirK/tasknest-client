@@ -19,6 +19,7 @@ export const useTasksStore = defineStore('tasks', {
       this.loading = true
       this.error = null
       try {
+        console.log('Вызов FetchTasks')
         const res = await api.get('/tasks')
         this.tasks = res.data
         this.saveToLocalStorage()
