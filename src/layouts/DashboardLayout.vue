@@ -49,7 +49,7 @@
       </main>
     </div>
 
-    <div class="sm:hidden sticky bottom-0 left-0 w-full h-[9vh] bg-white flex justify-between items-center border-t-1 border-slate-300">
+    <div class="sm:hidden fixed bottom-0 left-0 w-full h-[9vh] bg-white flex justify-between items-center border-t-1 border-slate-300">
       <RouterLink
         v-for="tab in tabs"
         :key="tab.name"
