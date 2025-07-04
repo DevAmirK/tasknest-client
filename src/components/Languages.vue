@@ -17,7 +17,7 @@ const toggle = () => {
 
 const selectLanguage = (code) => {
   locale.value = code
-  localStorage.setItem('lang', code)
+  localStorage.setItem('locale', code)
   open.value = false
 }
 </script>
