@@ -1,5 +1,5 @@
 <template>
-  <div v-if="archivedTasks > 0" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+  <div v-if="archivedTasks.length > 0" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
     <TaskNote
       v-for="task in archivedTasks"
       :key="task.id"
