@@ -38,9 +38,8 @@
         @open-palette="openPalette"
         @close-palette="closePalette"
         @toggle="toggleTask"
-        @delete="deleteTask"
         @trash="trashTask"
-        @restore="restoreTask"
+        @archive="archiveTask"
       />
     </div>
 
@@ -55,8 +54,8 @@
         @open-palette="openPalette"
         @close-palette="closePalette"
         @toggle="toggleTask"
-        @delete="deleteTask"
         @trash="trashTask"
+        @archive="archiveTask"
       />
     </div>
   </div>
@@ -91,9 +90,8 @@ const cancelNewTask = () => {
 }
 
 const toggleTask = (task) => tasksStore.toggleTask(task)
-const deleteTask = (id) => tasksStore.deleteTask(id)
 const trashTask = (id) => tasksStore.trashTask(id)
-const restoreTask = (task) => tasksStore.restoreTask(task)
+const archiveTask = (id) => tasksStore.archiveTask(id)
 
 const openPalette = (id) => (activePaletteId.value = id)
 const closePalette = () => (activePaletteId.value = null)

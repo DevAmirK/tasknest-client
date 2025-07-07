@@ -19,14 +19,12 @@ export const useTasksStore = defineStore('tasks', {
       this.loading = true
       this.error = null
       try {
-        console.log('Вызов FetchTasks')
         const res = await api.get('/tasks')
         this.tasks = res.data
         this.saveToLocalStorage()
         this.fetchStatus = 'success'
       } catch (err) {
-        this.error = t('toast.taskFetchError')
-        toast.error(this.error)
+        toast.error(t('toast.taskFetchError'))
         this.fetchStatus = 'error'
       } finally {
         this.loading = false
@@ -49,8 +47,8 @@ export const useTasksStore = defineStore('tasks', {
         toast.success(t('toast.taskAdded'))
       } catch (err) {
         this.tasks = this.tasks.filter((t) => t.id !== tempId)
-        this.error = t('toast.taskAddError')
-        toast.error(this.error)
+
+        toast.error(t('toast.taskAddError'))
         this.saveToLocalStorage()
       }
     },
@@ -67,8 +65,7 @@ export const useTasksStore = defineStore('tasks', {
         await api.put(`/tasks/${task.id}`, { done: !oldDone })
       } catch (err) {
         this.tasks[index].done = oldDone
-        this.error = t('toast.taskUpdateError')
-        toast.error(this.error)
+        toast.error(t('toast.taskUpdateError'))
         this.saveToLocalStorage()
       }
     },
@@ -112,8 +109,7 @@ export const useTasksStore = defineStore('tasks', {
         })
       } catch (err) {
         this.tasks = original
-        this.error = t('toast.taskTrashError')
-        toast.error(this.error)
+        toast.error(t('toast.taskTrashError'))
         this.saveToLocalStorage()
       }
     },
@@ -155,8 +151,52 @@ export const useTasksStore = defineStore('tasks', {
         toast.warning(t('toast.taskDeleted'))
       } catch (err) {
         this.tasks = original
-        this.error = t('toast.taskDeleteError')
-        toast.error(this.error)
+        toast.error(t('toast.taskDeleteError'))
+        this.saveToLocalStorage()
+      }
+    },
+
+    async archiveTask(id) {
+      const original = [...this.tasks]
+      this.tasks = this.tasks.filter((task) => task.id !== id)
+      this.saveToLocalStorage()
+
+      try {
+        await api.put(`/tasks/${id}`, { status: 1 })
+        toast.info(t('toast.taskArchived'))
+      } catch (err) {
+        this.tasks = original
+        toast.error(t('toast.taskArchiveError'))
+        this.saveToLocalStorage()
+      }
+    },
+
+    async unarchiveTask(id) {
+      const original = [...this.tasks]
+      this.tasks = this.tasks.filter((task) => task.id !== id)
+      this.saveToLocalStorage()
+
+      try {
+        await api.put(`/tasks/${id}`, { status: 0 })
+        toast.success(t('toast.taskUnarchived'))
+      } catch (err) {
+        this.tasks = original
+        toast.error(t('toast.taskUnarchiveError'))
+        this.saveToLocalStorage()
+      }
+    },
+
+    async clearTrash() {
+      const original = [...this.tasks]
+      this.tasks = this.tasks.filter((task) => task.status !== 2)
+      this.saveToLocalStorage()
+
+      try {
+        await api.delete('/tasks/trash/clear')
+        toast.success(t('toast.tasksTrashCleared'))
+      } catch (err) {
+        this.tasks = original
+        toast.error(t('toast.tasksTrashClearError'))
         this.saveToLocalStorage()
       }
     },

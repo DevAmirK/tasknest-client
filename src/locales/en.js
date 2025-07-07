@@ -50,7 +50,10 @@ export default {
     cancel: 'Cancel',
     done: 'Done',
     completed: 'Completed',
+    archiveEmpty: 'There is nothing in the archive.',
     clearTrash: 'Clear Trash',
+    trashTitle: 'Tasks are permanently deleted from trash after 7 days.',
+    trashEmpty: 'There is nothing in the trash.',
     tabs: {
       tasks: 'Tasks',
       archive: 'Archive',
@@ -71,12 +74,27 @@ export default {
     taskAddError: 'Failed to add task.',
     taskDeleted: 'Task deleted.',
     taskTrashed: 'Task moved to trash.',
+    taskArchived: 'Task moved to archive',
+    taskUnarchived: 'Task restored from archive',
     taskRestored: 'Task restored!',
+    tasksTrashCleared: 'Trash cleared successfully',
     taskDeleteError: 'Failed to delete task.',
     taskUpdateError: 'Failed to update task.',
     taskFetchError: 'Failed to load tasks.',
     taskTrashError: 'Failed to move task to trash.',
+    taskArchiveError: 'Failed to move task to archive',
+    taskUnarchiveError: 'Failed to restore task from archive',
     taskRestoreError: 'Failed to restore task.',
+    tasksTrashClearError: 'Failed to clear trash',
     undo: 'Undo'
+  },
+  tooltip: {
+    done: 'Mark as done',
+    palette: 'Background options',
+    archive: 'Move to archive',
+    trash: 'Move to trash',
+    delete: 'Delete',
+    restore: 'Restore',
+    unarchive: 'Unarchive'
   }
 }

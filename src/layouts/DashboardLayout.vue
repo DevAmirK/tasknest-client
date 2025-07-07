@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen relative">
+  <div class="min-h-screen relative flex flex-col">
     <header class="flex justify-between items-center mb-6 border-b-2 border-slate-200 px-6 pt-4">
       <div>
         <h1 class="text-3xl font-bold text-gray-800">{{ $t('dashboard.title') }}</h1>
@@ -28,17 +28,17 @@
       </div>
     </header>
 
-    <div class="flex wrapper">
-      <!-- Sidebar -->
-      <aside class="w-48 hidden md:block pr-2">
-        <nav class="flex flex-col gap-2">
+    <div class="h-full flex wrapper flex-1">
+      <aside class="w-50 hidden md:block pr-4">
+        <nav class="flex flex-col gap-1">
           <RouterLink
             v-for="tab in tabs"
             :key="tab.name"
             :to="`/dashboard/${tab.name}`"
-            class="text-left py-2 px-3 rounded-lg font-medium transition hover:bg-slate-100"
+            class="flex items-center gap-3 text-left py-3 px-3 rounded-lg font-medium transition hover:bg-slate-100"
             active-class="bg-blue-50 text-blue-600"
           >
+            <component :is="tab.icon" class="w-4 h-4" />
             {{ $t(`dashboard.tabs.${tab.name}`) }}
           </RouterLink>
         </nav>
@@ -100,8 +100,6 @@ async function pollTasks() {
 }
 
 onMounted(() => {
-  console.log('onMounted Dashboard')
-
   pollTasks()
 })
 

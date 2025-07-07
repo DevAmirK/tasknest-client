@@ -50,7 +50,10 @@ export default {
     cancel: 'Отмена',
     done: 'Готово',
     completed: 'Завершено',
+    archiveEmpty: 'В архиве ничего нет.',
     clearTrash: 'Очистить корзину',
+    trashTitle: 'Задачи удаляются из корзины через 7 дней.',
+    trashEmpty: 'В корзине ничего нет.',
     tabs: {
       tasks: 'Задачи',
       archive: 'Архив',
@@ -71,12 +74,27 @@ export default {
     taskAddError: 'Не удалось добавить задачу.',
     taskDeleted: 'Задача удалена.',
     taskTrashed: 'Задача перемещена в корзину.',
+    taskArchived: 'Задача отправлена в архив',
+    taskUnarchived: 'Задача восстановлена из архива',
     taskRestored: 'Задача восстановлена!',
+    tasksTrashCleared: 'Корзина успешно очищена',
     taskDeleteError: 'Не удалось удалить задачу.',
     taskUpdateError: 'Не удалось обновить задачу.',
     taskFetchError: 'Не удалось загрузить задачи.',
     taskTrashError: 'Не удалось переместить задачу в корзину.',
+    taskArchiveError: 'Не удалось переместить задачу в архив',
+    taskUnarchiveError: 'Не удалось восстановить задачу из архива',
     taskRestoreError: 'Не удалось восстановить задачу.',
+    tasksTrashClearError: 'Не удалось очистить корзину',
     undo: 'Отменить'
+  },
+  tooltip: {
+    done: 'Выполнено',
+    palette: 'Параметры фона',
+    archive: 'Отправить в архив',
+    trash: 'Переместить в корзину',
+    delete: 'Удалить',
+    restore: 'Восстановить',
+    unarchive: 'Вернуть из архива'
   }
 }
