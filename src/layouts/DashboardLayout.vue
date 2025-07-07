@@ -37,7 +37,7 @@
       </div>
     </header>
 
-    <div class="h-full flex wrapper flex-1 mb-[8vh] sm:mb-4 mt-20">
+    <div class="h-full flex wrapper flex-1 mb-16 sm:mb-4 mt-20">
       <aside class="w-50 hidden sm:block">
         <nav class="w-50 flex flex-col gap-1 fixed top-20 pr-4">
           <RouterLink
@@ -58,7 +58,7 @@
       </main>
     </div>
 
-    <div class="sm:hidden fixed bottom-0 left-0 z-10 w-full h-[7vh] bg-white flex justify-between items-center border-t-1 border-slate-300">
+    <div class="sm:hidden fixed bottom-0 left-0 z-10 w-full h-16 bg-white flex justify-between items-center border-t-1 border-slate-300">
       <RouterLink
         v-for="tab in tabs"
         :key="tab.name"

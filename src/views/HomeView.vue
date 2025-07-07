@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col app-wrapper">
-    <header class="sticky top-0 shadow">
+    <header class="fixed top-0 left-0 right-0 shadow backdrop-blur-xl">
       <div class="container mx-auto flex justify-between items-center">
         <router-link to="/">
           <img src="/logo.png" alt="Logo" class="h-7 w-auto sm:h-10" />
@@ -13,7 +13,7 @@
       </div>
     </header>
 
-    <main class="flex-5 w-full px-4">
+    <main class="flex-5 w-full px-4 mt-6">
       <div class="min-h-screen flex flex-col text-gray-800">
         <section class="flex-1 flex flex-col justify-center items-center text-center px-4 mt-10 md:mt-0">
           <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">

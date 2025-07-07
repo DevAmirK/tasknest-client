@@ -29,7 +29,6 @@ body {
 }
 
 header {
-  backdrop-filter: blur(1.5rem);
   padding: 0.6rem 6rem;
 }
 
