@@ -1,12 +1,12 @@
 <template>
   <div
-    class="relative min-h-[8rem] max-h-[22rem] shadow-md rounded-xl flex flex-col justify-between transition-all duration-300"
+    class="relative min-h-[8rem] max-h-[22rem] shadow-md border border-stone-200 rounded-xl flex flex-col justify-between transition-all duration-300 self-start"
     :style="{
       backgroundColor: task.color || '#ffffff',
       opacity: task.done ? 0.9 : 1
     }"
   >
-    <div class="flex-1 text-sm whitespace-pre-wrap break-words cursor-pointer p-4" @click="" :class="{ 'line-through': task.done }">
+    <div class="flex-1 text-sm whitespace-pre-wrap break-words cursor-pointer p-4 overflow-hidden" @click="" :class="{ 'line-through': task.done }">
       {{ task.text }}
     </div>
 

@@ -62,7 +62,8 @@ export default {
   },
   layout: {
     copyright: 'All rights reserved',
-    createdBy: 'Created by'
+    createdBy: 'Created by',
+    changeLanguage: 'Change language'
   },
   errors: {
     required: 'This field is required',

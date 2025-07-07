@@ -31,14 +31,14 @@ export const useTasksStore = defineStore('tasks', {
       }
     },
 
-    async addTask(text) {
+    async addTask(text, color = null) {
       const tempId = Date.now()
-      const newTask = { id: tempId, text, done: false }
+      const newTask = { id: tempId, text, done: false, color }
       this.tasks.unshift(newTask)
       this.saveToLocalStorage()
 
       try {
-        const res = await api.post('/tasks', { text })
+        const res = await api.post('/tasks', { text, color })
         const index = this.tasks.findIndex((t) => t.id === tempId)
         if (index !== -1) {
           this.tasks[index] = res.data

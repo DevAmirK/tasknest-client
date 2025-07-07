@@ -1,14 +1,19 @@
 <template>
   <div class="min-h-screen relative flex flex-col">
-    <header class="flex justify-between items-center mb-6 border-b-2 border-slate-200 px-6 pt-4">
+    <header
+      :class="[
+        'fixed top-0 left-0 right-0 z-10 h-16 bg-white flex justify-between items-center border-b-2 border-slate-200 px-6 pt-4 pb-4 transition-shadow',
+        scrolled ? 'shadow-md/20' : ''
+      ]"
+    >
       <div>
-        <h1 class="text-3xl font-bold text-gray-800">{{ $t('dashboard.title') }}</h1>
+        <h1 class="text-2xl font-bold text-gray-800">{{ $t('dashboard.title') }}</h1>
         <p v-if="auth.user?.name" class="text-sm text-gray-600">
           {{ $t('dashboard.welcome') }} <b>{{ auth.user.name }}</b>
         </p>
       </div>
 
-      <div class="flex gap-6 items-center">
+      <div class="flex gap-8 items-center">
         <component
           :is="
             {
@@ -21,16 +26,20 @@
           class="w-6 h-6"
           :class="{ 'animate-spin': fetchStatus === 'loading' }"
         />
-        <Languages class="relative" />
-        <button @click="handleLogout" class="text-sm font-semibold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl">
-          {{ $t('auth.logout') }}
-        </button>
+        <BaseTooltip :text="$t('layout.changeLanguage')">
+          <Languages class="relative" />
+        </BaseTooltip>
+        <BaseTooltip :text="$t('auth.logout')">
+          <button @click="handleLogout" class="flex items-center text-gray-700 hover:text-red-600">
+            <LogOut class="w-5 h-5" />
+          </button>
+        </BaseTooltip>
       </div>
     </header>
 
-    <div class="h-full flex wrapper flex-1">
-      <aside class="w-50 hidden md:block pr-4">
-        <nav class="flex flex-col gap-1">
+    <div class="h-full flex wrapper flex-1 mb-[8vh] sm:mb-4 mt-20">
+      <aside class="w-50 hidden sm:block">
+        <nav class="w-50 flex flex-col gap-1 fixed top-20 pr-4">
           <RouterLink
             v-for="tab in tabs"
             :key="tab.name"
@@ -49,15 +58,15 @@
       </main>
     </div>
 
-    <div class="sm:hidden fixed bottom-0 left-0 w-full h-[9vh] bg-white flex justify-between items-center border-t-1 border-slate-300">
+    <div class="sm:hidden fixed bottom-0 left-0 z-10 w-full h-[7vh] bg-white flex justify-between items-center border-t-1 border-slate-300">
       <RouterLink
         v-for="tab in tabs"
         :key="tab.name"
         :to="`/dashboard/${tab.name}`"
         class="w-1/3 h-full flex flex-col justify-center items-center gap-1"
       >
-        <component :is="tab.icon" class="w-6 h-6" />
-        <span>{{ $t(`dashboard.tabs.${tab.name}`) }}</span>
+        <component :is="tab.icon" class="w-5 h-5" />
+        <span class="text-sm">{{ $t(`dashboard.tabs.${tab.name}`) }}</span>
       </RouterLink>
     </div>
   </div>
@@ -67,9 +76,10 @@
 import { useAuthStore } from '@/store/auth'
 import { useRouter } from 'vue-router'
 import Languages from '@/components/Languages.vue'
-import { onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useTasksStore } from '@/store/tasks'
-import { CloudCheck, LoaderCircle, CloudAlert, LayoutList, Archive, Trash2 } from 'lucide-vue-next'
+import { CloudCheck, LoaderCircle, CloudAlert, LayoutList, Archive, Trash2, LogOut } from 'lucide-vue-next'
+import BaseTooltip from '@/components/BaseTooltip.vue'
 
 const tasksStore = useTasksStore()
 
@@ -99,12 +109,20 @@ async function pollTasks() {
   timerId = setTimeout(pollTasks, interval)
 }
 
+const scrolled = ref(false)
+
+const onScroll = () => {
+  scrolled.value = window.scrollY > 0
+}
+
 onMounted(() => {
   pollTasks()
+  window.addEventListener('scroll', onScroll)
 })
 
 onUnmounted(() => {
   clearTimeout(timerId)
+  window.removeEventListener('scroll', onScroll)
 })
 </script>
 

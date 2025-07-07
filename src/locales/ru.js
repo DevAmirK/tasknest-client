@@ -62,7 +62,8 @@ export default {
   },
   layout: {
     copyright: 'Все права защищены',
-    createdBy: 'Создано'
+    createdBy: 'Создано',
+    changeLanguage: 'Сменить язык'
   },
   errors: {
     required: 'Это поле обязательно',
