@@ -49,6 +49,7 @@ export default {
     delete: 'Delete',
     cancel: 'Cancel',
     done: 'Done',
+    close: 'Close',
     completed: 'Completed',
     archiveEmpty: 'There is nothing in the archive.',
     clearTrash: 'Clear Trash',
@@ -62,8 +63,7 @@ export default {
   },
   layout: {
     copyright: 'All rights reserved',
-    createdBy: 'Created by',
-    changeLanguage: 'Change language'
+    createdBy: 'Created by'
   },
   errors: {
     required: 'This field is required',

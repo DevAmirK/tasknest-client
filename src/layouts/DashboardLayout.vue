@@ -26,14 +26,10 @@
           class="w-6 h-6"
           :class="{ 'animate-spin': fetchStatus === 'loading' }"
         />
-        <BaseTooltip :text="$t('layout.changeLanguage')">
-          <Languages class="relative" />
-        </BaseTooltip>
-        <BaseTooltip :text="$t('auth.logout')">
-          <button @click="handleLogout" class="flex items-center text-gray-700 hover:text-red-600">
-            <LogOut class="w-5 h-5" />
-          </button>
-        </BaseTooltip>
+        <Languages class="relative" />
+        <button @click="handleLogout" class="flex items-center text-gray-700 hover:text-red-600">
+          <LogOut class="w-5 h-5" />
+        </button>
       </div>
     </header>
 

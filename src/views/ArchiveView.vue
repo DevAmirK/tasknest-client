@@ -33,7 +33,9 @@ const toggleTask = (task) => tasksStore.toggleTask(task)
 const trashTask = (id) => tasksStore.trashTask(id)
 const unarchiveTask = (id) => tasksStore.unarchiveTask(id)
 
-const openPalette = (id) => (activePaletteId.value = id)
+const openPalette = (id) => {
+  activePaletteId.value = activePaletteId.value === id ? null : id
+}
 const closePalette = () => (activePaletteId.value = null)
 
 onMounted(() => {

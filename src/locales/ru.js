@@ -49,6 +49,7 @@ export default {
     delete: 'Удалить',
     cancel: 'Отмена',
     done: 'Готово',
+    close: 'Закрыть',
     completed: 'Завершено',
     archiveEmpty: 'В архиве ничего нет.',
     clearTrash: 'Очистить корзину',

@@ -93,7 +93,7 @@ export const useTasksStore = defineStore('tasks', {
 
     async trashTask(id) {
       const original = [...this.tasks]
-      const taskToTrash = this.tasks.find((task) => task.id === id) // сохраняем
+      const taskToTrash = this.tasks.find((task) => task.id === id)
 
       this.tasks = this.tasks.filter((task) => task.id !== id)
       this.saveToLocalStorage()
@@ -158,12 +158,18 @@ export const useTasksStore = defineStore('tasks', {
 
     async archiveTask(id) {
       const original = [...this.tasks]
+      const taskToArchive = this.tasks.find((task) => task.id === id)
       this.tasks = this.tasks.filter((task) => task.id !== id)
       this.saveToLocalStorage()
 
       try {
         await api.put(`/tasks/${id}`, { status: 1 })
-        toast.info(t('toast.taskArchived'))
+        toast(t('toast.taskArchived'), {
+          action: {
+            label: t('toast.undo'),
+            onClick: () => this.restoreTask(taskToArchive)
+          }
+        })
       } catch (err) {
         this.tasks = original
         toast.error(t('toast.taskArchiveError'))
