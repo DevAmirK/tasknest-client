@@ -83,7 +83,6 @@ export const useTasksStore = defineStore('tasks', {
         const res = await api.put(`/tasks/${id}`, payload)
         this.tasks[index] = res.data
         this.saveToLocalStorage()
-        toast.success(t('toast.taskUpdated'))
       } catch (err) {
         this.tasks[index] = originalTask
         this.saveToLocalStorage()
