@@ -24,46 +24,44 @@
         ></textarea>
 
         <div class="flex items-center justify-between mt-2">
-          <BaseTooltip :text="$t('tooltip.palette')">
-            <div class="relative">
-              <button type="button" class="note-btn" @click.stop="showPalette = !showPalette">
-                <Palette class="w-5 h-5 text-gray-600" />
-              </button>
+          <div class="relative">
+            <button type="button" class="note-btn" @click.stop="showPalette = !showPalette">
+              <Palette class="w-5 h-5 text-gray-600" />
+            </button>
+            <div
+              v-if="showPalette && !isMobile"
+              ref="paletteRef"
+              class="absolute left-[50%] translate-x-[-50%] mt-2 bg-white rounded-lg shadow p-2 flex gap-1 z-50"
+            >
+              <button
+                v-for="color in colors"
+                :key="color"
+                :style="{ backgroundColor: color }"
+                class="w-6 h-6 rounded-full border border-slate-300 transition"
+                :class="{ 'ring-2 ring-blue-500': color === newTaskColor }"
+                @click="selectColor(color)"
+              ></button>
+            </div>
+            <Teleport to="body">
+              <!-- Мобильная палетка -->
               <div
-                v-if="showPalette && !isMobile"
+                v-if="showPalette && isMobile"
                 ref="paletteRef"
-                class="absolute left-[50%] translate-x-[-50%] mt-2 bg-white rounded-lg shadow p-2 flex gap-1 z-50"
+                class="fixed bottom-0 left-0 w-full bg-white shadow-[0_-4px_8px_rgba(0,0,0,0.2)] z-[1000] px-3 py-5 flex gap-2 overflow-x-auto"
               >
                 <button
                   v-for="color in colors"
                   :key="color"
                   :style="{ backgroundColor: color }"
-                  class="w-6 h-6 rounded-full border border-slate-300 transition"
-                  :class="{ 'ring-2 ring-blue-500': color === newTaskColor }"
-                  @click="selectColor(color)"
+                  :class="[
+                    'w-12 h-12 rounded-full border border-slate-300 shrink-0',
+                    color === newTaskColor ? 'outline outline-3 outline-blue-400' : ''
+                  ]"
+                  @click.stop="selectColor(color)"
                 ></button>
               </div>
-              <Teleport to="body">
-                <!-- Мобильная палетка -->
-                <div
-                  v-if="showPalette && isMobile"
-                  ref="paletteRef"
-                  class="fixed bottom-0 left-0 w-full bg-white shadow-[0_-4px_8px_rgba(0,0,0,0.2)] z-[1000] px-3 py-5 flex gap-2 overflow-x-auto"
-                >
-                  <button
-                    v-for="color in colors"
-                    :key="color"
-                    :style="{ backgroundColor: color }"
-                    :class="[
-                      'w-12 h-12 rounded-full border border-slate-300 shrink-0',
-                      color === newTaskColor ? 'outline outline-3 outline-blue-400' : ''
-                    ]"
-                    @click.stop="selectColor(color)"
-                  ></button>
-                </div>
-              </Teleport>
-            </div>
-          </BaseTooltip>
+            </Teleport>
+          </div>
 
           <div class="flex gap-4">
             <button
