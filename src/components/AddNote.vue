@@ -30,7 +30,7 @@
                 <Palette class="w-5 h-5 text-gray-600" />
               </button>
               <div
-                v-if="showPalette"
+                v-if="showPalette && !isMobile"
                 ref="paletteRef"
                 class="absolute left-[50%] translate-x-[-50%] mt-2 bg-white rounded-lg shadow p-2 flex gap-1 z-50"
               >
@@ -43,6 +43,25 @@
                   @click="selectColor(color)"
                 ></button>
               </div>
+              <Teleport to="body">
+                <!-- Мобильная палетка -->
+                <div
+                  v-if="showPalette && isMobile"
+                  ref="paletteRef"
+                  class="fixed bottom-0 left-0 w-full bg-white shadow-[0_-4px_8px_rgba(0,0,0,0.2)] z-[1000] px-3 py-5 flex gap-2 overflow-x-auto"
+                >
+                  <button
+                    v-for="color in colors"
+                    :key="color"
+                    :style="{ backgroundColor: color }"
+                    :class="[
+                      'w-12 h-12 rounded-full border border-slate-300 shrink-0',
+                      color === newTaskColor ? 'outline outline-3 outline-blue-400' : ''
+                    ]"
+                    @click.stop="selectColor(color)"
+                  ></button>
+                </div>
+              </Teleport>
             </div>
           </BaseTooltip>
 
@@ -74,7 +93,7 @@ const tasksStore = useTasksStore()
 
 const newTask = ref('')
 const creating = ref(false)
-const newTaskColor = ref(null)
+const newTaskColor = ref('#ffffff')
 const showPalette = ref(false)
 const paletteRef = ref(null)
 
@@ -108,6 +127,8 @@ const handleClickOutside = (e) => {
     showPalette.value = false
   }
 }
+
+const isMobile = ref(window.innerWidth < 640)
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
