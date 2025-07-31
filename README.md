@@ -1,6 +1,6 @@
 # Tasknest Client
 
-**Tasknest** is an intuitive and powerful web application for creating and managing notes. It allows users to easily organize their thoughts, tasks, and ideas in one centralized place.
+**Tasknest** is a web application for creating and managing notes.
 
 ## About The Project
 
@@ -119,7 +119,7 @@ If you have any questions or suggestions, feel free to reach out:
 
 # Tasknest Client
 
-**Tasknest** — это интуитивно понятное и мощное веб-приложение для создания и управления заметками. Оно позволяет пользователям легко организовывать свои мысли, задачи и идеи в одном централизованном месте.
+**Tasknest** — это веб-приложение для создания и управления заметками.
 
 ## О проекте
 
