@@ -18,11 +18,11 @@ This repository contains the **client-side** of the Tasknest application, respon
 
 ## Technologies Used
 
-- **Vue 3:**
-- **Vite:**
+- **Vue 3**
+- **Vite**
 - **Pinia:** State management library for Vue.js.
-- **Vue Router:**
-- **Tailwind CSS:**
+- **Vue Router**
+- **Tailwind CSS**
 - **Axios:** An HTTP client for API interaction.
 - **Lucide Vue Next:** A collection of beautiful icons for Vue.
 - **Vue i18n:** A plugin for internationalization in Vue.
@@ -137,11 +137,11 @@ If you have any questions or suggestions, feel free to reach out:
 
 ## Используемые технологии
 
-- **Vue 3:**
-- **Vite:**
+- **Vue 3**
+- **Vite**
 - **Pinia:** Хранилище состояний для Vue.js.
-- **Vue Router:**
-- **Tailwind CSS:**
+- **Vue Router**
+- **Tailwind CSS**
 - **Axios:** HTTP-клиент для взаимодействия с API.
 - **Lucide Vue Next:** Набор красивых икон для Vue.
 - **Vue i18n:** Плагин для интернационализации в Vue.
