@@ -64,16 +64,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore()
-
-  // Просто проверяем наличие токена — значит, пользователь залогинен
   const isLoggedIn = !!auth.token
 
   if ((to.path === '/' || to.path === '/login' || to.path === '/register') && isLoggedIn) {
     return next('/dashboard')
   }
 
-  // опционально: если пользователь пытается зайти на dashboard без токена
-  if (to.path === '/dashboard' && !isLoggedIn) {
+  if (to.path.startsWith('/dashboard') && !isLoggedIn) {
     return next('/login')
   }
 

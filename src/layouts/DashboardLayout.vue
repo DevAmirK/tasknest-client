@@ -75,7 +75,6 @@ import Languages from '@/components/Languages.vue'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useTasksStore } from '@/store/tasks'
 import { CloudCheck, LoaderCircle, CloudAlert, LayoutList, Archive, Trash2, LogOut } from 'lucide-vue-next'
-import BaseTooltip from '@/components/BaseTooltip.vue'
 
 const tasksStore = useTasksStore()
 
